@@ -17,7 +17,9 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title(),
+            'version' => $this->faker->numberBetween(1, 100),
+            'published_at' => $this->faker->date(),
         ];
     }
 }
