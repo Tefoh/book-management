@@ -13,31 +13,49 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAllUsers(): Collection
     {
-        // TODO: Implement getAllUsers() method.
+        return User::query()->get();
     }
 
     public function getPaginatedUsers($total = null): LengthAwarePaginator
     {
-        // TODO: Implement getPaginatedUsers() method.
+        return User::query()->paginate($total);
+    }
+
+    public function getUserByIdBuilder($userId): Builder
+    {
+        return User::query()
+            ->where('id', $userId);
     }
 
     public function getUserById($userId): Builder|User|null
     {
-        // TODO: Implement getUserById() method.
+        return $this
+            ->getUserByIdBuilder($userId)
+            ->first();
     }
 
     public function deleteUser($userId): bool
     {
-        // TODO: Implement deleteUser() method.
+        return $this
+            ->getUserByIdBuilder($userId)
+            ->delete();
     }
 
     public function createUser(array $userData): Builder|User
     {
-        // TODO: Implement createUser() method.
+        return User::query()->create($userData);
     }
 
     public function updateUser($userId, array $newData): User
     {
-        // TODO: Implement updateUser() method.
+        /**
+         *  This will result two queries but with this approach
+         *  the eloquent update event will trigger.
+         */
+        return tap(
+            $this->getUserByIdBuilder($userId)
+                ->first()
+        )
+            ->update($newData);
     }
 }
