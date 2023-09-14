@@ -16,9 +16,9 @@ class AuthorRepository implements AuthorRepositoryInterface
         return Author::query()->get();
     }
 
-    public function getPaginatedAuthors(): LengthAwarePaginator
+    public function getPaginatedAuthors($total = null): LengthAwarePaginator
     {
-        return Author::query()->paginate();
+        return Author::query()->paginate($total);
     }
 
     public function getAuthorByIdBuilder($authorId): Builder
@@ -64,10 +64,10 @@ class AuthorRepository implements AuthorRepositoryInterface
         return $this->getAllAuthors()->load('books');
     }
 
-    public function getPaginatedAuthorsWithBooks(): LengthAwarePaginator
+    public function getPaginatedAuthorsWithBooks($total = null): LengthAwarePaginator
     {
         return tap(
-            $this->getPaginatedAuthors()
+            $this->getPaginatedAuthors($total)
         )->load('books');
     }
 

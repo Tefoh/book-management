@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface UserRepositoryInterface
 {
     public function getAllUsers(): Collection;
-    public function getPaginatedUsers(): LengthAwarePaginator;
+    public function getPaginatedUsers($total = null): LengthAwarePaginator;
     public function getUserById($userId): User;
     public function deleteUser($userId): bool;
     public function createUser(array $userData): User;

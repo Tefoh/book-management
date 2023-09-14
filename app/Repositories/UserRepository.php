@@ -15,7 +15,7 @@ class UserRepository implements UserRepositoryInterface
         // TODO: Implement getAllUsers() method.
     }
 
-    public function getPaginatedUsers(): LengthAwarePaginator
+    public function getPaginatedUsers($total = null): LengthAwarePaginator
     {
         // TODO: Implement getPaginatedUsers() method.
     }

@@ -15,27 +15,27 @@ class BookRepository implements BookRepositoryInterface
         // TODO: Implement getAllBooks() method.
     }
 
-    public function getPaginatedBooks(): LengthAwarePaginator
+    public function getPaginatedBooks($total = null): LengthAwarePaginator
     {
         // TODO: Implement getPaginatedBooks() method.
     }
 
-    public function getBookById($authorId): Book
+    public function getBookById($bookId): Book
     {
         // TODO: Implement getBookById() method.
     }
 
-    public function deleteBook($authorId): bool
+    public function deleteBook($bookId): bool
     {
         // TODO: Implement deleteBook() method.
     }
 
-    public function createBook(array $authorData): Book
+    public function createBook(array $bookData): Book
     {
         // TODO: Implement createBook() method.
     }
 
-    public function updateBook($authorId, array $newData): Book
+    public function updateBook($bookId, array $newData): Book
     {
         // TODO: Implement updateBook() method.
     }
@@ -45,22 +45,22 @@ class BookRepository implements BookRepositoryInterface
         // TODO: Implement getAllBooksWithAuthors() method.
     }
 
-    public function getPaginatedBooksWithAuthors(): LengthAwarePaginator
+    public function getPaginatedBooksWithAuthors($total = null): LengthAwarePaginator
     {
         // TODO: Implement getPaginatedBooksWithAuthors() method.
     }
 
-    public function getAuthorByIdWithAuthors($authorId): Book
+    public function getAuthorByIdWithAuthors($bookId): Book
     {
         // TODO: Implement getAuthorByIdWithAuthors() method.
     }
 
-    public function createBookWithAuthors(array $authorDetails): Book
+    public function createBookWithAuthors(array $bookData): Book
     {
         // TODO: Implement createBookWithAuthors() method.
     }
 
-    public function updateBookWithAuthors($authorId, array $newDetails): Book
+    public function updateBookWithAuthors($bookId, array $newData): Book
     {
         // TODO: Implement updateBookWithAuthors() method.
     }

@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 interface AuthorRepositoryInterface
 {
     public function getAllAuthors(): Collection;
-    public function getPaginatedAuthors(): LengthAwarePaginator;
+    public function getPaginatedAuthors($total = null): LengthAwarePaginator;
     public function getAuthorByIdBuilder($authorId): Builder;
     public function getAuthorById($authorId): Builder|Author|null;
     public function deleteAuthor($authorId): bool;
@@ -18,7 +18,7 @@ interface AuthorRepositoryInterface
     public function updateAuthor($authorId, array $newData): Author;
 
     public function getAllAuthorsWithBooks(): Collection;
-    public function getPaginatedAuthorsWithBooks(): LengthAwarePaginator;
+    public function getPaginatedAuthorsWithBooks($total = null): LengthAwarePaginator;
     public function getAuthorByIdWithBooks($authorId): Builder|Author|null;
     public function createAuthorWithBooks(array $authorData): Builder|Author;
     public function updateAuthorWithBooks($authorId, array $newData): Author;
