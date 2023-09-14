@@ -13,56 +13,78 @@ class BookRepository implements BookRepositoryInterface
 
     public function getAllBooks(): Collection
     {
-        // TODO: Implement getAllBooks() method.
+        return Book::query()->get();
     }
 
     public function getPaginatedBooks($total = null): LengthAwarePaginator
     {
-        // TODO: Implement getPaginatedBooks() method.
+        return Book::query()->paginate($total);
+    }
+
+    public function getBookByIdBuilder($bookId): Builder
+    {
+        return Book::query()
+            ->where('id', $bookId);
     }
 
     public function getBookById($bookId): Builder|Book|null
     {
-        // TODO: Implement getBookById() method.
+        return $this
+            ->getBookByIdBuilder($bookId)
+            ->first();
     }
 
     public function deleteBook($bookId): bool
     {
-        // TODO: Implement deleteBook() method.
+        return $this
+            ->getBookByIdBuilder($bookId)
+            ->delete();
     }
 
     public function createBook(array $bookData): Builder|Book
     {
-        // TODO: Implement createBook() method.
+        return Book::query()->create($bookData);
     }
 
     public function updateBook($bookId, array $newData): Book
     {
-        // TODO: Implement updateBook() method.
+        /**
+         *  This will result two queries but with this approach
+         *  the eloquent update event will trigger.
+         */
+        return tap(
+            $this->getBookByIdBuilder($bookId)
+                ->first()
+        )
+            ->update($newData);
     }
 
     public function getAllBooksWithAuthors(): Collection
     {
-        // TODO: Implement getAllBooksWithAuthors() method.
+        return $this->getAllBooks()->load('authors');
     }
 
     public function getPaginatedBooksWithAuthors($total = null): LengthAwarePaginator
     {
-        // TODO: Implement getPaginatedBooksWithAuthors() method.
+        return tap(
+            $this->getPaginatedBooks($total)
+        )->load('authors');
     }
 
-    public function getAuthorByIdWithAuthors($bookId): Builder|Book|null
+    public function getBookByIdWithAuthors($bookId): Book
     {
-        // TODO: Implement getAuthorByIdWithAuthors() method.
+        return $this
+            ->getBookById($bookId)
+            ->load('authors');
     }
 
-    public function createBookWithAuthors(array $bookData): Builder|Book
+    public function createBookWithAuthors(array $bookData): Book
     {
-        // TODO: Implement createBookWithAuthors() method.
+        return $this->createBook($bookData)->load('authors');
     }
 
     public function updateBookWithAuthors($bookId, array $newData): Book
     {
-        // TODO: Implement updateBookWithAuthors() method.
+        return $this->updateBook($bookId, $newData)->load('authors');
     }
 }

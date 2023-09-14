@@ -18,7 +18,7 @@ interface BookRepositoryInterface
 
     public function getAllBooksWithAuthors(): Collection;
     public function getPaginatedBooksWithAuthors($total = null): LengthAwarePaginator;
-    public function getAuthorByIdWithAuthors($bookId): Builder|Book|null;
+    public function getBookByIdWithAuthors($bookId): Builder|Book|null;
     public function createBookWithAuthors(array $bookData): Builder|Book;
     public function updateBookWithAuthors($bookId, array $newData): Book;
 }
