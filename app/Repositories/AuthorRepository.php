@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\Repositories\AuthorRepositoryInterface;
 use App\Models\Author;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -12,56 +13,78 @@ class AuthorRepository implements AuthorRepositoryInterface
 
     public function getAllAuthors(): Collection
     {
-        // TODO: Implement getAllAuthors() method.
+        return Author::query()->get();
     }
 
     public function getPaginatedAuthors(): LengthAwarePaginator
     {
-        // TODO: Implement getPaginatedAuthors() method.
+        return Author::query()->paginate();
     }
 
-    public function getAuthorById($authorId): Author
+    public function getAuthorByIdBuilder($authorId): Builder
     {
-        // TODO: Implement getAuthorById() method.
+        return Author::query()
+            ->where('id', $authorId);
+    }
+
+    public function getAuthorById($authorId): Builder|Author|null
+    {
+        return $this
+            ->getAuthorByIdBuilder($authorId)
+            ->first();
     }
 
     public function deleteAuthor($authorId): bool
     {
-        // TODO: Implement deleteAuthor() method.
+        return $this
+            ->getAuthorByIdBuilder($authorId)
+            ->delete();
     }
 
-    public function createAuthor(array $authorData): Author
+    public function createAuthor(array $authorData): Builder|Author
     {
-        // TODO: Implement createAuthor() method.
+        return Author::query()->create($authorData);
     }
 
     public function updateAuthor($authorId, array $newData): Author
     {
-        // TODO: Implement updateAuthor() method.
+        /**
+         *  This will result two queries but with this approach
+         *  the eloquent update event will trigger.
+         */
+        return tap(
+                $this->getAuthorByIdBuilder($authorId)
+                    ->first()
+            )
+            ->update($newData);
     }
 
     public function getAllAuthorsWithBooks(): Collection
     {
-        // TODO: Implement getAllAuthorsWithBooks() method.
+        return $this->getAllAuthors()->load('books');
     }
 
     public function getPaginatedAuthorsWithBooks(): LengthAwarePaginator
     {
-        // TODO: Implement getPaginatedAuthorsWithBooks() method.
+        return tap(
+            $this->getPaginatedAuthors()
+        )->load('books');
     }
 
     public function getAuthorByIdWithBooks($authorId): Author
     {
-        // TODO: Implement getAuthorByIdWithBooks() method.
+        return $this
+            ->getAuthorById($authorId)
+            ->load('books');
     }
 
     public function createAuthorWithBooks(array $authorData): Author
     {
-        // TODO: Implement createAuthorWithBooks() method.
+        return $this->createAuthor($authorData)->load('books');
     }
 
     public function updateAuthorWithBooks($authorId, array $newData): Author
     {
-        // TODO: Implement updateAuthorWithBooks() method.
+        return $this->updateAuthor($authorId, $newData)->load('books');
     }
 }
