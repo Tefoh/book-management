@@ -15,4 +15,6 @@ interface UserRepositoryInterface
     public function deleteUser($userId): bool;
     public function createUser(array $userData): Builder|User;
     public function updateUser($userId, array $newData): User;
+
+    public function getUserByEmail($email): Builder|User|null;
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -43,6 +44,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function createUser(array $userData): Builder|User
     {
+        $userData['password'] = Hash::make($userData['password']);
         return User::query()->create($userData);
     }
 
@@ -57,5 +59,12 @@ class UserRepository implements UserRepositoryInterface
                 ->first()
         )
             ->update($newData);
+    }
+
+    public function getUserByEmail($email): Builder|User|null
+    {
+        return User::query()
+            ->where('email', $email)
+            ->first();
     }
 }
