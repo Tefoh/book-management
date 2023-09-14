@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\Repositories\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -20,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
         // TODO: Implement getPaginatedUsers() method.
     }
 
-    public function getUserById($userId): User
+    public function getUserById($userId): Builder|User|null
     {
         // TODO: Implement getUserById() method.
     }
@@ -30,7 +31,7 @@ class UserRepository implements UserRepositoryInterface
         // TODO: Implement deleteUser() method.
     }
 
-    public function createUser(array $userData): User
+    public function createUser(array $userData): Builder|User
     {
         // TODO: Implement createUser() method.
     }

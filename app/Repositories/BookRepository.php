@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\Repositories\BookRepositoryInterface;
 use App\Models\Book;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -20,7 +21,7 @@ class BookRepository implements BookRepositoryInterface
         // TODO: Implement getPaginatedBooks() method.
     }
 
-    public function getBookById($bookId): Book
+    public function getBookById($bookId): Builder|Book|null
     {
         // TODO: Implement getBookById() method.
     }
@@ -30,7 +31,7 @@ class BookRepository implements BookRepositoryInterface
         // TODO: Implement deleteBook() method.
     }
 
-    public function createBook(array $bookData): Book
+    public function createBook(array $bookData): Builder|Book
     {
         // TODO: Implement createBook() method.
     }
@@ -50,12 +51,12 @@ class BookRepository implements BookRepositoryInterface
         // TODO: Implement getPaginatedBooksWithAuthors() method.
     }
 
-    public function getAuthorByIdWithAuthors($bookId): Book
+    public function getAuthorByIdWithAuthors($bookId): Builder|Book|null
     {
         // TODO: Implement getAuthorByIdWithAuthors() method.
     }
 
-    public function createBookWithAuthors(array $bookData): Book
+    public function createBookWithAuthors(array $bookData): Builder|Book
     {
         // TODO: Implement createBookWithAuthors() method.
     }
