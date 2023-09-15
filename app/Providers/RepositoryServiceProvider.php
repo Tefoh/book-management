@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Interfaces\Repositories\AuthorRepositoryInterface;
 use App\Interfaces\Repositories\BookRepositoryInterface;
+use App\Interfaces\Repositories\BookReserveRepositoryInterface;
 use App\Interfaces\Repositories\UserRepositoryInterface;
 use App\Repositories\AuthorRepository;
 use App\Repositories\BookRepository;
+use App\Repositories\BookReserveRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +30,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class,
+        );
+        $this->app->bind(
+            BookReserveRepositoryInterface::class,
+            BookReserveRepository::class,
         );
     }
 

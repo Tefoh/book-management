@@ -3,6 +3,7 @@
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Book\BookController;
+use App\Http\Controllers\v1\Book\ReserveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,9 @@ Route::middleware('guest')->post('/login', LoginController::class);
 Route::prefix('books')->group(function () {
     Route::get('all', [BookController::class, 'allBooks']);
     Route::get('get/{id}', [BookController::class, 'getBook']);
+
+    Route::middleware('auth')->group(function () {
+        Route::post('/reserve/{id}', [ReserveController::class, 'reserve']);
+        Route::post('/release/{id}', [ReserveController::class, 'release']);
+    });
 });

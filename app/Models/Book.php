@@ -24,4 +24,14 @@ class Book extends Model
     {
         return $this->belongsToMany(Author::class);
     }
+
+    public function statuses()
+    {
+        return $this->hasMany(BookReserve::class, 'book_id');
+    }
+
+    public function lastStatus()
+    {
+        return $this->hasOne(BookReserve::class, 'book_id')->latestOfMany();
+    }
 }
