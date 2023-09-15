@@ -26,4 +26,5 @@ Route::middleware('guest')->post('/login', LoginController::class);
 
 Route::prefix('books')->group(function () {
     Route::get('all', [BookController::class, 'allBooks']);
+    Route::get('get/{id}', [BookController::class, 'getBook']);
 });

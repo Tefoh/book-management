@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\RegisterController;
+use App\Http\Controllers\v1\Book\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,8 @@ Route::get('/', function () {
 
 Route::middleware('guest')->post('/register', RegisterController::class);
 Route::middleware('guest')->post('/login', LoginController::class);
+
+Route::prefix('books')->group(function () {
+    Route::get('all', [BookController::class, 'allBooks']);
+    Route::get('get/{id}', [BookController::class, 'getBook']);
+});
