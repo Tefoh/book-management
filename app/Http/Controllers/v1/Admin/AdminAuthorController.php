@@ -4,7 +4,7 @@ namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
-use App\Interfaces\Repositories\AuthorRepositoryInterface;
+use App\Interfaces\Handlers\Admin\AdminAuthorHandlerInterface;
 use App\Interfaces\Responses\Admin\AdminAuthorResponseInterface;
 use App\Models\Author;
 use Illuminate\Support\Facades\View;
@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\View;
 class AdminAuthorController
 {
     public function __construct(
-        private readonly AuthorRepositoryInterface    $authorRepository,
         private readonly AdminAuthorResponseInterface $authorResponse,
+        private readonly AdminAuthorHandlerInterface  $adminAuthorHandler,
     )
     { }
 
     public function index()
     {
-        $authors = $this->authorRepository->getPaginatedAuthors();
+        $authors = $this->adminAuthorHandler->getPaginatedAuthors();
 
         return $this->authorResponse->sendPaginatedResponse($authors);
     }
@@ -32,7 +32,7 @@ class AdminAuthorController
 
     public function store(StoreAuthorRequest $request)
     {
-        $author = $this->authorRepository->createAuthorWithBooks(
+        $author = $this->adminAuthorHandler->createAuthorWithBooks(
             $request->validated()
         );
 
@@ -53,8 +53,8 @@ class AdminAuthorController
 
     public function update(UpdateAuthorRequest $request, Author $author)
     {
-        $updatedAuthor = $this->authorRepository->updateAuthorWithBooks(
-            $author->id,
+        $updatedAuthor = $this->adminAuthorHandler->updateAuthorWithBooks(
+            $author,
             $request->validated()
         );
 
@@ -63,7 +63,7 @@ class AdminAuthorController
 
     public function destroy(Author $author)
     {
-        $this->authorRepository->deleteAuthor(
+        $this->adminAuthorHandler->deleteAuthor(
             $author->id
         );
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\v1\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
-use App\Interfaces\Repositories\BookRepositoryInterface;
+use App\Interfaces\Handlers\Admin\AdminBookHandlerInterface;
 use App\Interfaces\Responses\Admin\AdminBookResponseInterface;
 use App\Models\Book;
 use Illuminate\Support\Facades\View;
@@ -13,14 +12,14 @@ use Illuminate\Support\Facades\View;
 class AdminBookController
 {
     public function __construct(
-        private readonly BookRepositoryInterface    $bookRepository,
         private readonly AdminBookResponseInterface $bookResponse,
+        private readonly AdminBookHandlerInterface $adminBookHandler,
     )
     { }
 
     public function index()
     {
-        $books = $this->bookRepository->getPaginatedBooks();
+        $books = $this->adminBookHandler->getPaginatedBooks();
 
         return $this->bookResponse->sendPaginatedResponse($books);
     }
@@ -33,13 +32,8 @@ class AdminBookController
 
     public function store(StoreBookRequest $request)
     {
-        [$bookData, $authorIds] = $this->mapData($request->validated());
-        $book = $this->bookRepository->createBook(
-            $bookData
-        );
-        $this->bookRepository->assignAuthors(
-            $book,
-            $authorIds
+        $book = $this->adminBookHandler->createBook(
+            $request->validated()
         );
 
         return $this->bookResponse->sendSingleResponse($book);
@@ -59,14 +53,9 @@ class AdminBookController
 
     public function update(UpdateBookRequest $request, Book $book)
     {
-        [$bookData, $authorIds] = $this->mapData($request->validated());
-        $updatedBook = $this->bookRepository->updateBook(
-            $book->id,
-            $bookData
-        );
-        $this->bookRepository->assignAuthors(
+        $updatedBook = $this->adminBookHandler->updateBook(
             $book,
-            $authorIds
+            $request->validated()
         );
 
         return $this->bookResponse->sendSingleResponse($updatedBook);
@@ -74,23 +63,10 @@ class AdminBookController
 
     public function destroy(Book $book)
     {
-        $this->bookRepository->deleteBook(
+        $this->adminBookHandler->deleteBook(
             $book->id
         );
 
         return $this->bookResponse->sendSingleResponse($book);
-    }
-
-    private function mapData(array $validated)
-    {
-        $bookData = $validated;
-        $authorIds = $validated['author_ids'];
-
-        unset($bookData['author_ids']);
-
-        return [
-            $bookData,
-            $authorIds
-        ];
     }
 }
