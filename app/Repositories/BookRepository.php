@@ -11,9 +11,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class BookRepository implements BookRepositoryInterface
 {
 
-    public function getAllBooks(): Collection
+    public function getAllBooks($columns = ['*']): Collection
     {
-        return Book::query()->get();
+        return Book::query()->get($columns);
     }
 
     public function getPaginatedBooks($total = null): LengthAwarePaginator
@@ -59,9 +59,9 @@ class BookRepository implements BookRepositoryInterface
             ->update($newData);
     }
 
-    public function getAllBooksWithAuthors(): Collection
+    public function getAllBooksWithAuthors($columns = ['*']): Collection
     {
-        return $this->getAllBooks()->load('authors');
+        return $this->getAllBooks($columns)->load('authors');
     }
 
     public function getPaginatedBooksWithAuthors($total = null): LengthAwarePaginator

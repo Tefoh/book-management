@@ -9,14 +9,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BookRepositoryInterface
 {
-    public function getAllBooks(): Collection;
+    public function getAllBooks($columns = ['*']): Collection;
     public function getPaginatedBooks($total = null): LengthAwarePaginator;
     public function getBookById($bookId): Builder|Book|null;
     public function deleteBook($bookId): bool;
     public function createBook(array $bookData): Builder|Book;
     public function updateBook($bookId, array $newData): Book;
 
-    public function getAllBooksWithAuthors(): Collection;
+    public function getAllBooksWithAuthors($columns = ['*']): Collection;
     public function getPaginatedBooksWithAuthors($total = null): LengthAwarePaginator;
     public function getBookByIdWithAuthors($bookId): Builder|Book|null;
     public function createBookWithAuthors(array $bookData): Builder|Book;
