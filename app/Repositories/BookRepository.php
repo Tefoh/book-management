@@ -87,4 +87,13 @@ class BookRepository implements BookRepositoryInterface
     {
         return $this->updateBook($bookId, $newData)->load('authors');
     }
+
+    public function assignAuthors(Book $book, array $authorIds)
+    {
+        $book->authors()->sync(
+            $authorIds
+        );
+
+        return $book->load('authors');
+    }
 }

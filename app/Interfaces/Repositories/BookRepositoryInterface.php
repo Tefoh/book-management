@@ -21,4 +21,6 @@ interface BookRepositoryInterface
     public function getBookByIdWithAuthors($bookId): Builder|Book|null;
     public function createBookWithAuthors(array $bookData): Builder|Book;
     public function updateBookWithAuthors($bookId, array $newData): Book;
+
+    public function assignAuthors(Book $book, array $authorIds);
 }

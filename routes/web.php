@@ -36,7 +36,7 @@ Route::prefix('books')->group(function () {
         Route::post('/release/{id}', [ReserveController::class, 'release']);
     });
 });
-Route::middleware('auth')->prefix('/admin')->group(function () {
+Route::prefix('/admin')->group(function () {
     Route::resource('books', AdminBookController::class);
     Route::resource('authors', AdminAuthorController::class);
 });
