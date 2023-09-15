@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Views\Book\AllBooks;
+namespace App\Http\Views\Book\Books;
 
 use App\Http\Views\ViewInterface;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\View;
 
-class AndroidAllBooksView implements ViewInterface
+class AndroidBooksView implements ViewInterface
 {
     public function render($data): ViewContract
     {
         /** @var Collection $data */
         $books = $data->map(fn ($book) => $this->mapBookData($book));
 
-        return View::make('books.show', [
+        return View::make('books.all', [
             'books' => $books
         ]);
     }

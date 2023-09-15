@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\v1\Book\AllBooks;
+namespace App\Http\Resources\v1\Book\Books;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AndroidAllBooksResource extends JsonResource
+class IPhoneBooksResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,7 @@ class AndroidAllBooksResource extends JsonResource
             'title' => $this->title,
             'authors' => $this->authors->map(fn ($author) => [
                 'id' => $author->id,
-                'authorName' => $author->name,
+                'name' => $author->name,
             ])
         ];
     }

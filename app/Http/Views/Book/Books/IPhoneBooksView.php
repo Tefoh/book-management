@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Views\Book\AllBooks;
+namespace App\Http\Views\Book\Books;
 
 use App\Http\Views\ViewInterface;
+use App\Models\Book;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\View;
 
-class WebAllBooksView implements ViewInterface
+class IPhoneBooksView implements ViewInterface
 {
     public function render($data): ViewContract
     {
@@ -28,13 +29,15 @@ class WebAllBooksView implements ViewInterface
         ]);
     }
 
-    private function mapBookData($book)
+    private function mapBookData($book): array
     {
         return [
             'id' => $book->id,
             'title' => $book->title,
-            'version' => $book->version,
-            'authors' => $book->authors->pluck('name')
+            'authors' => $book->authors->map(fn($author) => [
+                'id' => $author->id,
+                'name' => $author->name,
+            ])
         ];
     }
 }
