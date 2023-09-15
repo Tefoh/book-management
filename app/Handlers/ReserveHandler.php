@@ -70,12 +70,14 @@ class ReserveHandler implements ReserveHandlerInterface
     {
         $book = $this->bookRepository->getBookById($bookId);
 
-        return $book->lastStatus?->status === BookReserveStatus::RESERVED;
+        return $book->cantBeReserved();
     }
 
     private function bookCanReserved($bookId): bool
     {
-        return ! $this->bookCantReserved($bookId);
+        $book = $this->bookRepository->getBookById($bookId);
+
+        return $book->canBeReserved();
     }
 
     private function mapReleaseData($bookId): array

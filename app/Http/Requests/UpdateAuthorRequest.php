@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Author;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAuthorRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateAuthorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,12 @@ class UpdateAuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(Author::class, 'name')->ignore($this->route('author')?->id)
+            ]
         ];
     }
 }

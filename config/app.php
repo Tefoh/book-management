@@ -171,6 +171,7 @@ return [
 
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\BookServiceProvider::class,
+        App\Providers\AdminServiceProvider::class,
     ])->toArray(),
 
     /*

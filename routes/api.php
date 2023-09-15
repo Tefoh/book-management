@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\v1\Admin\AdminAuthorController;
+use App\Http\Controllers\v1\Admin\AdminBookController;
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Book\BookController;
@@ -33,4 +35,8 @@ Route::prefix('books')->group(function () {
         Route::post('/reserve/{id}', [ReserveController::class, 'reserve']);
         Route::post('/release/{id}', [ReserveController::class, 'release']);
     });
+});
+Route::middleware('auth:sanctum')->prefix('/admin')->group(function () {
+    Route::apiResource('books', AdminBookController::class);
+    Route::apiResource('authors', AdminAuthorController::class);
 });

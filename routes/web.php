@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\v1\Admin\AdminAuthorController;
+use App\Http\Controllers\v1\Admin\AdminBookController;
 use App\Http\Controllers\v1\Auth\LoginController;
 use App\Http\Controllers\v1\Auth\RegisterController;
 use App\Http\Controllers\v1\Book\BookController;
@@ -22,6 +24,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('guest')->post('/register', RegisterController::class);
+Route::middleware('guest')->get('/login', fn () => 'You are not logged in.')->name('login');
 Route::middleware('guest')->post('/login', LoginController::class);
 
 Route::prefix('books')->group(function () {
@@ -32,4 +35,8 @@ Route::prefix('books')->group(function () {
         Route::post('/reserve/{id}', [ReserveController::class, 'reserve']);
         Route::post('/release/{id}', [ReserveController::class, 'release']);
     });
+});
+Route::middleware('auth')->prefix('/admin')->group(function () {
+    Route::resource('books', AdminBookController::class);
+    Route::resource('authors', AdminAuthorController::class);
 });
