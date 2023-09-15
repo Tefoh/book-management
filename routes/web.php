@@ -19,5 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/register', RegisterController::class);
-Route::post('/login', LoginController::class);
+Route::middleware('guest')->post('/register', RegisterController::class);
+Route::middleware('guest')->post('/login', LoginController::class);
